@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import "./App.css";
+import { WEB_URL } from './consts/consts'
+
+import Navbar from './components/Navbar/Navbar'
+import ContentSection from './components/ContentSection/ContentSection';
 
 function App() {
+  const [imgData, setImgData] = useState('');
+
+   useEffect(() => {
+    axios.get(WEB_URL)
+    .then(res => {
+      setImgData(res.data)
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  })
+
   return (
     <div className="App">
-      <p>
-        Read through the instructions in the README.md file to build your NASA
-        app! Have fun <span role="img" aria-label='go!'>🚀</span>!
-      </p>
+      <Navbar />
+      <ContentSection data={imgData}  />
     </div>
   );
 }
